@@ -1,0 +1,17 @@
+<?php
+$naslov = "Navijački svijet";
+$autor = "Edi Talić";
+print "<h1>Navijački svijet</h1>";
+print "<p>Ovu stranicu izradio je <strong>$autor</strong>.</p>";
+print '<a href="https://gnkdinamo.hr/hr" target="_blank">Posjeti Dinamo</a>';
+?>
+
+<!DOCTYPE html>
+<html lange="hr">
+<head>
+    <title><?php print $naslov; ?></title>
+</head>
+<body>
+</body>
+</html>
+<!-- Naziv datoteke: vjezba1.php -->
