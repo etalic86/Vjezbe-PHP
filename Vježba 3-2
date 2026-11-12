@@ -1,0 +1,65 @@
+<?php
+$first_num = '';
+$second_num = '';
+$result = '';
+
+if ($_SERVER["REQUEST_METHOD"] === "POST") {
+    $first_num = $_POST['first_num'];
+    $second_num = $_POST['second_num'];
+    $operator = $_POST['operator'];
+
+    if (is_numeric($first_num) && is_numeric($second_num)) {
+        switch ($operator) {
+            case "+":
+                $result = $first_num + $second_num;
+                break;
+            case "-":
+                $result = $first_num - $second_num;
+                break;
+            case "*":
+                $result = $first_num * $second_num;
+                break;
+            case "/":
+                if ($second_num != 0) {
+                    $result = $first_num / $second_num;
+                } else {
+                    $result = "Dijeljenje s nulom nije dozvoljeno!";
+                }
+                break;
+        }
+    }
+}
+?>
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<title>Kalkulator</title>
+		<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+		<meta name="description" content="">
+		<meta name="keywords" content="">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+	</head>
+<body style="margin: 20px;">
+        <h1 style="margin-bottom:10px;font-size:14px;">Kalkulator (Switch naredba)</h1>
+        <form action="" method="post" id="calculator">
+            <div class="form-group">
+				<label for="first_num">Upiši prvi broj *</label>
+                <input type="number" step="any" name="first_num" id="first_num" required="required" value="<?php echo htmlspecialchars($first_num); ?>">
+            </div>
+            <div class="form-group">
+                <label for="second_num">Upiši drugi broj *</label>
+                <input type="number" step="any" name="second_num" id="second_num" required="required" value="<?php echo htmlspecialchars($second_num); ?>">
+            </div>
+            <div class="form-group">
+                Rezultat: <strong><?php echo $result; ?></strong>
+            </div>
+            <input type="submit" name="operator" value="+" class="btn btn-secondary">
+            <input type="submit" name="operator" value="-" class="btn btn-secondary">
+            <input type="submit" name="operator" value="*" class="btn btn-secondary">
+            <input type="submit" name="operator" value="/" class="btn btn-secondary">
+        </form>
+</body>
+</html>
