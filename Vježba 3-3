@@ -1,0 +1,109 @@
+<?php
+$prikaziRezultat = false;
+$ispis = "";
+
+if (isset($_POST['_action_']) && $_POST['_action_'] == "TRUE") {
+    $prikaziRezultat = true;
+    $ocjene = array((int)$_POST['a'], (int)$_POST['b']);
+
+    if ($ocjene[0] < 1 || $ocjene[0] > 5 || $ocjene[1] < 1 || $ocjene[1] > 5) {
+        $ispis = '<p>Ocjena mora biti između 1 i 5!</p>';
+    } else {
+        $ispis .= '<p>Ocjena I. kolokvija: ' . $ocjene[0] . '<br>';
+        $ispis .= 'Ocjena II. kolokvija: ' . $ocjene[1] . '</p>';
+        $ispis .= '<hr>';
+
+        if ($ocjene[0] == 1 || $ocjene[1] == 1) {
+            $ispis .= '<p>Srednja ocjena iz predmeta: 1<br>';
+            $ispis .= 'Konačna ocjena iz predmeta: 1</p>';
+        } else {
+            $prosjek = ($ocjene[0] + $ocjene[1]) / 2;
+            $ispis .= '<p>Srednja ocjena iz predmeta: ' . $prosjek . '<br>';
+            $ispis .= 'Konačna ocjena iz predmeta: ' . round($prosjek) . '</p>';
+        }
+    }
+    $ispis .= '<p><a href="">Povratak</a></p>';
+}
+?>
+<!DOCTYPE HTML>
+<html>
+	<head>
+	<meta http-equiv="content-type" content="text/html;charset=utf-8">
+	<title>Prosjek ocjena</title>
+	<style>
+		body {
+			font-family: "Times New Roman", Times, serif;
+			font-size: 16px;
+			color: #232323;
+			width: 55%;
+			margin: 0 auto;
+			margin-top: 2em;
+		}
+		input[type="number"] {
+			box-sizing: border-box;
+			-webkit-box-sizing: border-box;
+			-moz-box-sizing: border-box;
+			outline: none;
+			display: block;
+			width: 100%;
+			padding: 7px;
+			border: none;
+			border-bottom: 1px solid #ddd;
+			background: transparent;
+			margin-bottom: 10px;
+			font-size: 16px;
+			height: 45px;
+		}
+		label {
+			width: 250px;
+			display: inline-block;
+		}
+		.block {
+			margin: 4px 0;
+		}
+		input[type="submit"] {
+			-moz-box-shadow: inset 0px 1px 0px 0px #45D6D6;
+			-webkit-box-shadow: inset 0px 1px 0px 0px #45D6D6;
+			box-shadow: inset 0px 1px 0px 0px #45D6D6;
+			background-color: #2CBBBB;
+			border: 1px solid #27A0A0;
+			display: inline-block;
+			cursor: pointer;
+			color: #FFFFFF;
+			font-size: 14px;
+			padding: 8px 18px;
+			text-decoration: none;
+			text-transform: uppercase;
+		}
+		hr {
+			width: 150px;
+			margin-left: 0;
+			border: 0;
+			border-top: 1px solid #333;
+		}
+	</style>
+	</head>
+	<body>
+		<h1>Izračun ocjene iz kolokvija</h1>
+		<p>Potrebno je napraviti formu za izračun ocjene iz kolokvija. Imamo uvjet da moramo izračunati srednju ocjenu iz prvog i drugog kolokvija. Ukoliko je jedan od kolokvija negativan, krajnja ocjena je negativna. Drugi uvjet je da ocjena ne smije biti manja od 1 i veća od 5</p>
+
+		<?php if ($prikaziRezultat): ?>
+			<?php echo $ispis; ?>
+		<?php else: ?>
+			<form action="" method="post">
+				<input type="hidden" id="_action_" name="_action_" value="TRUE"><br>
+				<div class="block">
+					<label for="a">Ocjena I. kolokvija: </label>
+					<input type="number" id="a" name="a" min="1" max="5" required><br>
+				</div>
+				<div class="block">
+					<label for="b">Ocjena II. kolokvija: </label>
+					<input type="number" id="b" name="b" min="1" max="5" required><br>
+				</div>
+				<div class="block">
+					<input type="submit" value="Pošalji"> 
+				</div>
+			</form>
+		<?php endif; ?>
+	</body>
+</html>
