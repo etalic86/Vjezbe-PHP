@@ -1,0 +1,57 @@
+<?php
+$cars = array("Audi", "BMW", "Renault", "Citroen");
+$odabranoVozilo = "";
+
+if ($_SERVER["REQUEST_METHOD"] === "POST") {
+    if (isset($_POST["auto"])) {
+        $odabranoVozilo = htmlspecialchars($_POST["auto"]);
+    } else {
+        $odabranoVozilo = "Niste odabrali niti jedno vozilo!";
+    }
+}
+?>
+<!DOCTYPE html>
+<html lang="hr">
+  <head>
+    <meta charset="utf-8">
+    <title>Izbor vozila</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <style>
+      body { margin: 20px; }
+      ul { list-style-type: none; padding-left: 20px; }
+      .btn-posalji {
+          background-color: #2CBBBB;
+          border: 1px solid #27A0A0;
+          color: #FFFFFF;
+          padding: 8px 18px;
+          text-transform: uppercase;
+          border-radius: 0;
+      }
+      .btn-posalji:hover {
+          background-color: #25a3a3;
+          color: #FFFFFF;
+      }
+    </style>
+  </head>
+  <body>
+    <p>Označi vozilo:</p>
+    <form action="" method="post">
+      <ul>
+        <?php foreach ($cars as $car): ?>
+          <li>
+            <label style="font-weight: normal; cursor: pointer;">
+              <input type="radio" name="auto" value="<?php echo $car; ?>"> <?php echo $car; ?>
+            </label>
+          </li>
+        <?php endforeach; ?>
+      </ul>
+      <input type="submit" value="POŠALJI" class="btn btn-posalji">
+    </form>
+
+    <?php if (!empty($odabranoVozilo)): ?>
+      <p style="margin-top: 15px;">Odabrano vozilo je: <strong><?php echo $odabranoVozilo; ?></strong></p>
+    <?php endif; ?>
+  </body>
+</html>
