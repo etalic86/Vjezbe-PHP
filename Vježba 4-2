@@ -1,0 +1,66 @@
+<?php
+date_default_timezone_set('Europe/Zagreb');
+
+function provjeriRadnoVrijeme($stanje = "otvoren") {
+    $danUTjednu = date('N'); 
+    $trenutniSat = (int)date('G'); 
+    $danIMjesec = date('d.m.'); 
+    $puniDatum = date('d.m.Y.'); 
+
+    $fiksniPraznici = array(
+        "01.01.", 
+        "06.01.", 
+        "01.05.", 
+        "30.05.", 
+        "22.06.", 
+        "05.08.",
+        "15.08.", 
+        "01.11.", 
+        "18.11.", 
+        "25.12.", 
+        "26.12."  
+    );
+
+    $pomicniPraznici = array(
+        "05.04.2026.",
+        "06.04.2026.",
+        "04.06.2026."
+    );
+    if (in_array($danIMjesec, $fiksniPraznici) || in_array($puniDatum, $pomicniPraznici)) {
+        $stanje = "zatvoren (državni praznik ili blagdan)";
+    }
+    elseif ($danUTjednu == 7) {
+        $stanje = "zatvoren";
+    }
+    elseif ($danUTjednu == 6) {
+        if ($trenutniSat >= 9 && $trenutniSat < 14) {
+            $stanje = "otvoren";
+        } else {
+            $stanje = "zatvoren";
+        }
+    }
+    else {
+        if ($trenutniSat >= 8 && $trenutniSat < 20) {
+            $stanje = "otvoren";
+        } else {
+            $stanje = "zatvoren";
+        }
+    }
+
+    return "Dućan je ovog trena " . $stanje . ".";
+}
+
+$poruka = provjeriRadnoVrijeme();
+?>
+<!DOCTYPE html>
+<html lang="hr">
+<head>
+    <meta charset="utf-8">
+    <title>Radno vrijeme dućana</title>
+</head>
+<body style="margin: 20px; font-family: Arial, sans-serif;">
+    <h1>Radno vrijeme dućana</h1>
+    <p>Trenutno vrijeme: <strong><?php echo date('d.m.Y. H:i'); ?></strong></p>
+    <p><strong><?php echo $poruka; ?></strong></p>
+</body>
+</html>
